@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import Header from './components/Header';
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(prevMenuOpen => !prevMenuOpen);
+  };
+
   return (
     <div className="App">
-      <h1 className="bg-gray-200 dark:bg-gray-800">
-        Hello world!
-      </h1>
+      <Header toggleMenu={toggleMenu} isOpen={menuOpen} />
     </div>
   );
 }
