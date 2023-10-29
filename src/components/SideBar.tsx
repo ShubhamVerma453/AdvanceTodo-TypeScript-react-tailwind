@@ -6,7 +6,7 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = ({ isOpen }) => {
     return <>
-        <div className={`text-center px-3 side-bar ${isOpen && "open"}`}>
+        <div className={`text-center px-3 side-bar smooth ${isOpen && "open"}`}>
             <div className="text-sm">BOARDS (3)</div>
             <ul>
                 <li className="colored">
