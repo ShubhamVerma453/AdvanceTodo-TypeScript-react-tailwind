@@ -1,0 +1,24 @@
+ /* *********  global classes  ********* */
+
+ .colored {
+     color: #03C988;
+ }
+
+ /* *********  specific classes  ********* */
+ .side-bar {
+     width: 90px;
+     height: 100%;
+     position: fixed;
+     top: 90px;
+     left: -250px;
+     transition: left 0.25s ease;
+ }
+
+ .side-bar.open {
+     left: 0;
+ }
+
+ .side-bar-open {
+     margin-left: 90px;
+     /* Adjust margin to accommodate open sidebar width */
+ }

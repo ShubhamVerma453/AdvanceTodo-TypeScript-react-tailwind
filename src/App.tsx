@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
 import './App.css';
 import Header from './components/Header';
+import SideBar from './components/SideBar';
+import TodoBoard from './components/TodoBoard';
 
 function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [sideBarOpen, setSideBarOpen] = useState(true);
 
   const toggleMenu = () => {
-    setMenuOpen(prevMenuOpen => !prevMenuOpen);
+    setSideBarOpen(prevSideBarOpen => !prevSideBarOpen);
   };
 
   return (
     <div className="App">
-      <Header toggleMenu={toggleMenu} isOpen={menuOpen} />
+      <Header toggleMenu={toggleMenu} isOpen={sideBarOpen} />
+      <div>
+        <SideBar isOpen={sideBarOpen}/>
+        <TodoBoard isOpen={sideBarOpen}/>
+      </div>
     </div>
   );
 }
