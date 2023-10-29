@@ -1,4 +1,5 @@
 import React from 'react';
+import useDarkMode from '../hooks/useDarkMode';
 
 interface HeaderProps {
     toggleMenu: () => void;
@@ -6,6 +7,8 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ toggleMenu, isOpen }) => {
+    const [theme, toggleTheme] = useDarkMode();
+
     return (
         <div className="header">
             <header className="py-6 pl-5 pr-10 text-3xl flex justify-between">
@@ -13,9 +16,12 @@ const Header: React.FC<HeaderProps> = ({ toggleMenu, isOpen }) => {
                     <i className={`fas fa-pencil-alt colored smooth origin-center ${isOpen && "-rotate-90"}`}></i>
                     <span className="font-bold ml-3">To-Do Pro</span>
                 </div>
-                <div className="cursor-pointer">
-                    <i className="fa-regular fa-sun"></i>
-                    {/* <i className="fas fa-moon"></i> */}
+                <div className="cursor-pointer" onClick={toggleTheme}>
+                    {
+                        theme === "light" ?
+                            <i className="fa-regular fa-sun"></i> :
+                            <i className="fas fa-moon"></i>
+                    }
                 </div>
             </header>
         </div>

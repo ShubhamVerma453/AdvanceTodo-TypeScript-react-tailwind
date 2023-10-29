@@ -5,7 +5,8 @@
  }
 
  .smooth {
-     transition: all 0.25s ease;
+    transition: 0.25s ease;
+    transition-property: transform, left, margin;
  }
 
  /* *********  specific classes  ********* */

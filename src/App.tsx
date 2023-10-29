@@ -12,7 +12,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App dark:text-white dark:bg-gray-800">
       <Header toggleMenu={toggleMenu} isOpen={sideBarOpen} />
       <div>
         <SideBar isOpen={sideBarOpen}/>
