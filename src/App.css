@@ -1,12 +1,24 @@
  /* *********  global classes  ********* */
 
+ * {
+     scrollbar-width: none;
+ }
+
+ *::-webkit-scrollbar {
+     display: none;
+ }
+
  .colored {
      color: #03C988;
  }
 
+ .hover:hover {
+     background-color: #03C988;
+ }
+
  .smooth {
-    transition: 0.25s ease;
-    transition-property: transform, left, margin;
+     transition: 0.25s ease;
+     transition-property: transform, left, margin;
  }
 
  /* *********  specific classes  ********* */
