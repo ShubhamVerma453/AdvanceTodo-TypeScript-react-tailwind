@@ -8,26 +8,26 @@
      display: none;
  }
 
- .colored {
-     color: #03C988;
- }
-
- .hover:hover {
-     background-color: #03C988;
- }
-
  .smooth {
      transition: 0.25s ease;
      transition-property: transform, left, margin;
  }
 
  /* *********  specific classes  ********* */
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+
  .side-bar {
      width: 90px;
      height: 100%;
      position: fixed;
      top: 90px;
-     left: -250px;
+     left: -90px;
  }
 
  .side-bar.open {

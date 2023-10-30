@@ -5,7 +5,7 @@ interface SideBarProps {
 }
 
 const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
-    return <div className={`bg-[#f4f7fd] dark:bg-black rounded-tl-2xl p-6 smooth ${isOpen && "side-bar-open"}`}>
+    return <div className={`bg-[#f4f7fd] dark:bg-black rounded-tl-2xl p-6 mt-[84px] smooth ${isOpen && "side-bar-open"}`}>
 
         <div className="flex gap-3 items-center flex-wrap ml-4">
             <h1 className="text-3xl font-bold mr-4">Board Name</h1>
@@ -15,7 +15,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
             </div>
         </div>
 
-        <div className="overflow-x-scroll whitespace-nowrap scrollbar-hidden">
+        <div className="overflow-scroll whitespace-nowrap">
 
             <div className="my-4 p-4 mr-5 w-80  inline-block align-top">
                 <div className="flex items-center gap-3 mb-7">
@@ -24,6 +24,36 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
                 </div>
 
                 <div className="">
+                    <div className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
+                        <div className="font-bold">Build UI for onboarding flow</div>
+                        <div className="text-gray-500 dark:text-gray-400">1 of 3 completed task</div>
+                    </div>
+
+                    <div className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
+                        <div className="font-bold">Build UI for onboarding flow</div>
+                        <div className="text-gray-500 dark:text-gray-400">1 of 3 completed task</div>
+                    </div>
+
+                    <div className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
+                        <div className="font-bold">Build UI for onboarding flow</div>
+                        <div className="text-gray-500 dark:text-gray-400">1 of 3 completed task</div>
+                    </div>
+
+                    <div className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
+                        <div className="font-bold">Build UI for onboarding flow</div>
+                        <div className="text-gray-500 dark:text-gray-400">1 of 3 completed task</div>
+                    </div>
+
+                    <div className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
+                        <div className="font-bold">Build UI for onboarding flow</div>
+                        <div className="text-gray-500 dark:text-gray-400">1 of 3 completed task</div>
+                    </div>
+
+                    <div className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
+                        <div className="font-bold">Build UI for onboarding flow</div>
+                        <div className="text-gray-500 dark:text-gray-400">1 of 3 completed task</div>
+                    </div>
+
                     <div className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
                         <div className="font-bold">Build UI for onboarding flow</div>
                         <div className="text-gray-500 dark:text-gray-400">1 of 3 completed task</div>

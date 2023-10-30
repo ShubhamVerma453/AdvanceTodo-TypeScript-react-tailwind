@@ -10,10 +10,10 @@ const Header: React.FC<HeaderProps> = ({ toggleMenu, isOpen }) => {
     const [theme, toggleTheme] = useDarkMode();
 
     return (
-        <div className="header">
+        <div className="header bg-white dark:bg-[#2b2c37]">
             <header className="py-6 pl-5 pr-10 text-3xl flex justify-between">
                 <div className="flex items-center cursor-pointer" onClick={toggleMenu}>
-                    <i className={`fas fa-pencil-alt colored smooth origin-center ${isOpen && "-rotate-90"}`}></i>
+                    <i className={`fas fa-pencil-alt text-[#03C988] smooth origin-center ${isOpen && "-rotate-90"}`}></i>
                     <span className="font-bold ml-3">To-Do Pro</span>
                 </div>
                 <div className="cursor-pointer" onClick={toggleTheme}>
