@@ -10,8 +10,9 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
         <div className="flex gap-3 items-center flex-wrap ml-4">
             <h1 className="text-3xl font-bold mr-4">Board Name</h1>
             <div className="flex gap-5 items-center">
-                <div className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover"><i className="fa-solid fa-plus"></i></div>
-                <div className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover"><i className="fa-solid fa-gears"></i></div>
+                <div title="Add task" className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]"><i className="fa-solid fa-plus"></i></div>
+                <div title="Add Row" className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]"><i className="fa-regular fa-square-plus"></i></div>
+                <div title="Configure board" className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]"><i className="fa-solid fa-gears"></i></div>
             </div>
         </div>
 
