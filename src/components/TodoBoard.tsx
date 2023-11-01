@@ -1,10 +1,16 @@
 import React from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectData } from "../store/dataSlice";
 
 interface SideBarProps {
     isOpen: boolean;
 }
 
 const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
+
+    let data = useSelector(selectData);
+    console.log(data);
+
     return <div className={`bg-[#f4f7fd] dark:bg-black rounded-tl-2xl p-6 mt-[84px] smooth ${isOpen && "side-bar-open"}`}>
 
         <div className="flex gap-3 items-center flex-wrap ml-4">
