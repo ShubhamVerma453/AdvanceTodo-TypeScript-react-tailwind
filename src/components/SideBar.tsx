@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector } from 'react-redux';
-import { selectData } from "../store/dataSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectData, selectIndex, setActiveIndex } from "../store/dataSlice";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -8,7 +8,13 @@ interface SideBarProps {
 
 const SideBar: React.FC<SideBarProps> = ({ isOpen }) => {
 
-    let data = useSelector(selectData);
+    const data = useSelector(selectData);
+    const activeIndex = useSelector(selectIndex);
+    const dispatch = useDispatch();
+
+    function handelBoardChange(index:number) {
+        dispatch( setActiveIndex(index) ); 
+    }
 
     return <>
         <div className={`text-center px-3 pt-4 side-bar bg-white dark:bg-[#2b2c37] smooth ${isOpen && "open"}`}>
@@ -16,7 +22,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen }) => {
             <ul>
                 {data && data.map((item, index) => {
                     return (
-                        <li className={`${item.isActive && "text-[#03C988]"} hover:text-[#03C988]`} key={index}>
+                        <li onClick={()=>handelBoardChange(index)} className={`${activeIndex === index && "text-[#03C988]"} hover:text-[#03C988]`} key={index}>
                             <div className="flex flex-col mt-4">
                                 <i className="fa-regular fa-rectangle-list text-lg"></i>
                                 <div className="text-xs">{item.name}</div>

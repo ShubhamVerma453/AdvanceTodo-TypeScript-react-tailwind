@@ -32,7 +32,7 @@ const getInitialStateFromLocal = (): dataFormat => {
         }
     }
     // return [];
-    return  demoData.boards;
+    return demoData.boards;
 }
 
 const getDemoData = (): dataFormat => {
@@ -41,15 +41,21 @@ const getDemoData = (): dataFormat => {
 
 const initialState = {
     data: getInitialStateFromLocal(),
+    activeIndex: 0,
 };
 
 export const dataSlice = createSlice({
     name: "todoData",
     initialState,
     reducers: {
+        setActiveIndex(state, action) {
+            state.activeIndex = action.payload;
+        },
 
     }
 })
 
-export const selectData = (state: { data: { data: dataFormat } }) => state.data.data;
+export const selectData = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.data;
+export const selectIndex = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.activeIndex;
+export const { setActiveIndex } = dataSlice.actions;
 export default dataSlice.reducer;

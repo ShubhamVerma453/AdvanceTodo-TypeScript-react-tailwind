@@ -21,8 +21,10 @@ function useDarkMode():[Theme, () => void] {
         // Toggle Tailwind CSS classes based on the theme
         if (theme === 'dark') {
             document.documentElement.classList.add('dark');
+            document.body.style.backgroundColor = "#2b2c37";
         } else {
             document.documentElement.classList.remove('dark');
+            document.body.style.backgroundColor = "white";
         }
     }, [theme]);
 
