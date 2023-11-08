@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import { selectData, selectIndex } from "../store/dataSlice";
+import ConfigureMenu from "./ConfigureMenu";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -36,12 +37,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
                     <div title="Add task" className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]"><i className="fa-solid fa-plus"></i></div>
                     <div title="Configure board" onClick={toggleIsCongigureOpen} className="text-xl relative bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]">
                         <i className="fa-solid fa-gears"></i>
-                        {isCongigureOpen &&
-                            <div className="bg-white dark:bg-[#2b2c37] shadow-sm w-32 p-2 rounded-lg text-sm absolute top-10 left-0 z-10">
-                                <div className="hover:bg-[#03C988] px-2 py-1 rounded-lg">edit board</div>
-                                <div className="text-red-600 hover:bg-red-300 px-2 py-1 rounded-lg">delete board</div>
-                            </div>
-                        }
+                        {isCongigureOpen && <ConfigureMenu type="Board"/> }
                     </div>
                 </div>
             </div>
