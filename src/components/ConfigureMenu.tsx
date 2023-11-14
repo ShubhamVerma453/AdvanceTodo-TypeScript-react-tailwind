@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import DeleteModal from "../modals/DeleteModel";
 
-const ConfigureMenu: React.FC<{ type: string }> = ({ type }) => {
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+interface ConfigureMenuProps {
+    type : string,
+    setIsDeleteModalOpen : (arg0: boolean)=> void,
+}
+
+const ConfigureMenu: React.FC<ConfigureMenuProps> = ({ type, setIsDeleteModalOpen }) => {
 
     function handelDelete(event: { stopPropagation: () => void; }) {
-        event.stopPropagation(); 
         setIsDeleteModalOpen(true);
     }
 
@@ -14,9 +16,7 @@ const ConfigureMenu: React.FC<{ type: string }> = ({ type }) => {
             <div className="hover:bg-[#03C988] px-2 py-1 rounded-lg">edit {type}</div>
             <div onClick={handelDelete} className="text-red-600 hover:bg-red-300 px-2 py-1 rounded-lg">delete {type}</div>
         </div>
-        {isDeleteModalOpen &&
-            <DeleteModal type="Board" title="SomeTitle" setIsDeleteModalOpen={setIsDeleteModalOpen} />
-        }
+        
     </>
     )
 }
