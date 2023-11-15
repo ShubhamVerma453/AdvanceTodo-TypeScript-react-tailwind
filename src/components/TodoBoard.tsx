@@ -4,6 +4,7 @@ import { selectData, selectIndex } from "../store/dataSlice";
 import ConfigureMenu from "./ConfigureMenu";
 import TaskModal from "../modals/TaskModal"
 import DeleteModal from "../modals/DeleteModel";
+import Task from "./Task";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -15,7 +16,6 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
     let data = useSelector(selectData)[activeIndex];
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCongigureOpen, setIsCongigureOpen] = useState(false);
-    const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
     const colors = [
         "bg-red-500",
         "bg-yellow-500",
@@ -42,31 +42,26 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
                         <div title="Add task" className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]"><i className="fa-solid fa-plus"></i></div>
                         <div title="Configure board" onClick={toggleIsCongigureOpen} className="text-xl relative bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]">
                             <i className="fa-solid fa-gears"></i>
-                            {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen}/>}
+                            {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} />}
                         </div>
                     </div>
                 </div>
 
                 <div className="overflow-scroll whitespace-nowrap">
 
-                    {data.columns && data.columns.map((item, index) => {
+                    {data.columns && data.columns.map((column, index) => {
                         return (
 
                             <div className="my-4 p-4 mr-5 w-80  inline-block align-top" key={index}>
                                 <div className="flex items-center gap-3 mb-7">
                                     <span className={`${colors[index % (colors.length)]} inline-block w-5 h-5 rounded-full`}></span>
-                                    {item.name} ({item.tasks.length})
+                                    {column.name} ({column.tasks.length})
                                 </div>
 
                                 <div className="">
-                                    {item.tasks.map((task, index) => {
+                                    {column.tasks.map((task, index) => {
                                         return (
-                                            <div key={index} >
-                                                <div onClick={() => { setIsTaskModelOpen(true) }} className="bg-white p-5 mb-9 rounded-xl shadow-lg dark:bg-[#2b2c37] hover:text-[#03C988]">
-                                                    <div className="font-bold whitespace-break-spaces">{task.title}</div>
-                                                    <div className="text-gray-500 dark:text-gray-400">{task.subtasks.reduce((acc, curr) => curr.isCompleted ? acc + 1 : acc, 0)} of {task.subtasks.length} completed task</div>
-                                                </div>
-                                            </div>
+                                            <Task key={index} task={task} />
                                         )
                                     })}
                                 </div>
