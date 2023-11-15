@@ -4,6 +4,7 @@ import DeleteModal from "./DeleteModel";
 import SubtaskBox from "../components/Subtask";
 import { useSelector } from "react-redux";
 import { selectData, selectIndex } from "../store/dataSlice";
+import AddEditTaskModel from "./AddEditTaskModel";
 
 interface Subtask {
     title: string;
@@ -26,6 +27,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen }) => {
     const columns = data.columns;
     const [isCongigureOpen, setIsCongigureOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
 
     return (
         <div onClick={(e) => {
@@ -36,7 +38,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen }) => {
                 <div className=" relative flex justify-between w-full items-center">
                     <h1 className=" text-lg">{task.title}</h1>
                     <i className="fa-solid fa-ellipsis-vertical fa-lg cursor-pointer" onClick={() => { setIsCongigureOpen(preState => !preState) }}></i>
-                    {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} />}
+                    {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} setEditModelOpen={setIsAddEditTaskModelOpen}/>}
                 </div>
 
                 <p className=" text-gray-500 font-[600] tracking-wide text-xs pt-6 whitespace-normal"> {task.description} </p>
@@ -72,7 +74,11 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen }) => {
             </div>
 
             {isDeleteModalOpen &&
-                <DeleteModal type="Board" title="data.name" setIsDeleteModalOpen={setIsDeleteModalOpen} />
+                <DeleteModal type="Task" title={task.title} setIsDeleteModalOpen={setIsDeleteModalOpen} />
+            }
+
+            {isAddEditTaskModelOpen &&
+                <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} />
             }
         </div>
     )

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import { selectData, selectIndex } from "../store/dataSlice";
 import ConfigureMenu from "./ConfigureMenu";
-import TaskModal from "../modals/TaskModal"
 import DeleteModal from "../modals/DeleteModel";
 import Task from "./Task";
+import AddEditBoardModel from "../modals/AddEditBoardModel";
+import AddEditTaskModel from "../modals/AddEditTaskModel";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -16,6 +17,8 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
     let data = useSelector(selectData)[activeIndex];
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isCongigureOpen, setIsCongigureOpen] = useState(false);
+    const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
+    const [isAddEditBoardModel, setIsAddEditBoardModel] = useState(false);
     const colors = [
         "bg-red-500",
         "bg-yellow-500",
@@ -39,10 +42,10 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
                 <div className="flex gap-3 items-center flex-wrap ml-4">
                     <h1 className="text-3xl font-bold mr-4">{data.name}</h1>
                     <div className="flex gap-5 items-center">
-                        <div title="Add task" className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]"><i className="fa-solid fa-plus"></i></div>
+                        <div title="Add task" onClick={() => {setIsAddEditTaskModelOpen(true)}} className="text-xl bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]"><i className="fa-solid fa-plus"></i></div>
                         <div title="Configure board" onClick={toggleIsCongigureOpen} className="text-xl relative bg-slate-300 dark:bg-slate-700 cursor-pointer px-3 py-1 rounded-full hover:bg-[#03C988] dark:hover:bg-[#03C988]">
                             <i className="fa-solid fa-gears"></i>
-                            {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} />}
+                            {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} setEditModelOpen={setIsAddEditBoardModel} />}
                         </div>
                     </div>
                 </div>
@@ -80,6 +83,14 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
 
         {isDeleteModalOpen &&
             <DeleteModal type="Board" title={data.name} setIsDeleteModalOpen={setIsDeleteModalOpen} />
+        }
+
+        {isAddEditTaskModelOpen &&
+            <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} />
+        }
+
+        {isAddEditBoardModel &&
+            <AddEditBoardModel setIsAddEditBoardModelOpen={setIsAddEditBoardModel} />
         }
     </>
 }
