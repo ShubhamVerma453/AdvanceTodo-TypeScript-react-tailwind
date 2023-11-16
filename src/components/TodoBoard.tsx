@@ -74,7 +74,6 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
                     }
                 </div>
             </> :
-
                 <div className="text-center">
                     <h1 className="text-4xl mt-36 text-slate-400 dark:text-[#2b2c37]">Select a board</h1>
                 </div>
@@ -90,7 +89,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
         }
 
         {isAddEditBoardModel &&
-            <AddEditBoardModel setIsAddEditBoardModelOpen={setIsAddEditBoardModel} />
+            <AddEditBoardModel setIsAddEditBoardModelOpen={setIsAddEditBoardModel} type="Edit" />
         }
     </>
 }

@@ -44,7 +44,7 @@ const SideBar: React.FC<SideBarProps> = ({ isOpen }) => {
         </div>
 
         {isAddEditBoardModel &&
-            <AddEditBoardModel setIsAddEditBoardModelOpen={setIsAddEditBoardModel} />
+            <AddEditBoardModel setIsAddEditBoardModelOpen={setIsAddEditBoardModel} type="Add"/>
         }
     </>
 }

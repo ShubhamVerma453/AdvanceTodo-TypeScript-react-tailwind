@@ -1,16 +1,28 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectData, selectIndex } from "../store/dataSlice";
 
 interface AddEditBoardModelProps {
+    type: "Add" | "Edit",
     setIsAddEditBoardModelOpen: (arg0: boolean) => void,
 }
 
-const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoardModelOpen }) => {
-    const [boardName, setBoardName] = useState("");
+const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoardModelOpen, type }) => {
+    const activeIndex = useSelector(selectIndex);
+    const data = useSelector(selectData)[activeIndex];
+    const [boardName, setBoardName] = useState(getBoardName());
+    const [newColumns, setNewColumns] = useState(getColumns());
     const [showError, setShowError] = useState(false);
-    const [newColumns, setNewColumns] = useState([
-        { name: "Todo", tasks: [] },
-        { name: "Doing", tasks: [] },
-    ]);
+
+    function getColumns() {
+        if (type === "Add") return [{ name: "Todo", tasks: [] }, { name: "Doing", tasks: [] }];
+        return data.columns;
+    }
+    
+    function getBoardName() {
+        if (type === "Add") return "";
+        return data.name;
+    }
 
     function onDeleteColumn(name: string) {
         setNewColumns(pre => pre.filter((curr) => curr.name !== name));
@@ -50,12 +62,10 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
         }} className="fixed right-0 top-0 left-0 bottom-0 px-2 py-4 overflow-scroll z-50 justify-center items-center flex bg-[#00000050] dark:bg-[#000000b3]">
             <div className=" scrollbar-hide overflow-y-scroll whitespace-normal max-h-[95vh]  my-auto  bg-white dark:bg-[#2b2c37] text-black dark:text-white font-bold max-w-md mx-auto w-full px-8 py-8 rounded-xl ">
 
-                <h3 className=" text-lg "> Add New Board </h3>
+                <h3 className=" text-lg ">{type === "Edit" ? "Edit" : "Add New"} Board </h3>
 
                 <div className="mt-8 flex flex-col space-y-1">
-                    <label className="  text-sm dark:text-white text-gray-500">
-                        Board Name
-                    </label>
+                    <label className="  text-sm dark:text-white text-gray-500"> Board Name </label>
                     <input className=" bg-transparent px-4 py-2 rounded-md text-sm border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-none "
                         placeholder=" e.g Web Design"
                         value={boardName}
@@ -66,9 +76,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
                 </div>
 
                 <div className="mt-8 flex flex-col space-y-3">
-                    <label className=" text-sm dark:text-white text-gray-500">
-                        Board Columns
-                    </label>
+                    <label className=" text-sm dark:text-white text-gray-500"> Board Columns </label>
 
                     {newColumns.map((column, index) => (
                         <div key={index} className=" flex items-center w-full ">
@@ -88,9 +96,9 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
 
                         </div>
                     ))}
+
                     <div>
-                        <button
-                            className=" w-full items-center hover:opacity-70 dark:text-[#635fc7] dark:bg-white  text-white bg-[#635fc7] py-2 rounded-full "
+                        <button className=" w-full items-center hover:opacity-70 dark:text-[#635fc7] dark:bg-white  text-white bg-[#635fc7] py-2 rounded-full "
                             onClick={() => {
                                 setNewColumns((state) => [
                                     ...state,
@@ -98,13 +106,12 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
                                 ]);
                             }}
                         > + Add New Column </button>
-                        <button
+                        <button className=" w-full items-center hover:opacity-70 dark:text-white dark:bg-[#635fc7] mt-8 relative  text-white bg-[#635fc7] py-2 rounded-full"
                             onClick={() => {
                                 const isValid = validate();
                                 // if (isValid) onSubmit(type);
                                 if (!isValid) setShowError(true);
                             }}
-                            className=" w-full items-center hover:opacity-70 dark:text-white dark:bg-[#635fc7] mt-8 relative  text-white bg-[#635fc7] py-2 rounded-full"
                         > Create New Board </button>
                     </div>
                 </div>
