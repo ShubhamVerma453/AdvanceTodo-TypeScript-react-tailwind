@@ -52,19 +52,19 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
 
                 <div className="overflow-scroll whitespace-nowrap">
 
-                    {data.columns && data.columns.map((column, index) => {
+                    {data.columns && data.columns.map((column, colIndex) => {
                         return (
 
-                            <div className="my-4 p-4 mr-5 w-80  inline-block align-top" key={index}>
+                            <div className="my-4 p-4 mr-5 w-80  inline-block align-top" key={colIndex}>
                                 <div className="flex items-center gap-3 mb-7">
-                                    <span className={`${colors[index % (colors.length)]} inline-block w-5 h-5 rounded-full`}></span>
+                                    <span className={`${colors[colIndex % (colors.length)]} inline-block w-5 h-5 rounded-full`}></span>
                                     {column.name} ({column.tasks.length})
                                 </div>
 
                                 <div className="">
-                                    {column.tasks.map((task, index) => {
+                                    {column.tasks.map((task, taskIndex) => {
                                         return (
-                                            <Task key={index} task={task} />
+                                            <Task key={taskIndex} task={task} />
                                         )
                                     })}
                                 </div>
