@@ -1,23 +1,17 @@
 import React, { useState } from "react";
 import TaskModal from "../modals/TaskModal";
+import { useSelector } from "react-redux";
+import { selectData, selectIndex } from "../store/dataSlice";
 
-interface Subtask {
-    title: string;
-    isCompleted: boolean;
-}
-interface Task {
-    title: string;
-    description: string;
-    status: string;
-    subtasks: Subtask[];
-}
 interface TaskProps {
-    task: Task
     colIndex: number
     taskIndex: number
 }
 
-const TaskBox: React.FC<TaskProps> = ({ task, colIndex, taskIndex }) => {
+const TaskBox: React.FC<TaskProps> = ({ colIndex, taskIndex }) => {
+    const activeIndex = useSelector(selectIndex);
+    const data = useSelector(selectData)[activeIndex];
+    const task = data.columns[colIndex].tasks[taskIndex];
     const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
     return (
         <div >
@@ -26,7 +20,6 @@ const TaskBox: React.FC<TaskProps> = ({ task, colIndex, taskIndex }) => {
                 <div className="text-gray-500 dark:text-gray-400">{task.subtasks.reduce((acc, curr) => curr.isCompleted ? acc + 1 : acc, 0)} of {task.subtasks.length} completed task</div>
             </div>
             {isTaskModelOpen && <TaskModal
-                task={task}
                 setIsTaskModelOpen={setIsTaskModelOpen}
                 colIndex={colIndex}
                 taskIndex={taskIndex}

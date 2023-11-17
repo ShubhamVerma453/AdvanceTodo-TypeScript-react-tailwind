@@ -64,7 +64,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
                                 <div className="">
                                     {column.tasks.map((task, taskIndex) => {
                                         return (
-                                            <Task key={taskIndex} task={task} colIndex={colIndex} taskIndex={taskIndex} />
+                                            <Task key={taskIndex} colIndex={colIndex} taskIndex={taskIndex} />
                                         )
                                     })}
                                 </div>
@@ -85,7 +85,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
         }
 
         {isAddEditTaskModelOpen &&
-            <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} type="Add"/>
+            <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} type="Add" />
         }
 
         {isAddEditBoardModel &&

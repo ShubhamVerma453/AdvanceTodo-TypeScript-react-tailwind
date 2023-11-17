@@ -6,30 +6,22 @@ import { useSelector } from "react-redux";
 import { selectData, selectIndex } from "../store/dataSlice";
 import AddEditTaskModel from "./AddEditTaskModel";
 
-interface Subtask {
-    title: string;
-    isCompleted: boolean;
-}
-interface Task {
-    title: string;
-    description: string;
-    status: string;
-    subtasks: Subtask[];
-}
 interface TaskModalProps {
-    task: Task,
     setIsTaskModelOpen: (arg0: boolean) => void,
     colIndex: number,
     taskIndex: number,
 }
 
-const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen, colIndex, taskIndex }) => {
+const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, taskIndex }) => {
     const activeIndex = useSelector(selectIndex);
     const data = useSelector(selectData)[activeIndex];
+    const task = data.columns[colIndex].tasks[taskIndex];
     const columns = data.columns;
     const [isCongigureOpen, setIsCongigureOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
+
+    function onChange() { }
 
     return (
         <div onClick={(e) => {
@@ -64,7 +56,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen, colInde
                     <select
                         className=" flex-grow px-4 py-2 rounded-md text-sm bg-transparent focus:border-0  border-[1px] border-gray-300 focus:outline-[#03C988] outline-none"
                         value={task.status}
-                    //   onChange={onChange}
+                        onChange={onChange}
                     >
                         {columns.map((col, index) => (
                             <option className=" dark:text-black" key={index}>
