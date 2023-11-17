@@ -66,7 +66,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
 
                 <div className="mt-8 flex flex-col space-y-1">
                     <label className="  text-sm dark:text-white text-gray-500"> Board Name </label>
-                    <input className=" bg-transparent px-4 py-2 rounded-md text-sm border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-none "
+                    <input className="bg-transparent px-4 py-2 rounded-md text-sm border-[0.5px] border-gray-600 focus:border-[#03C988] outline-none"
                         placeholder=" e.g Web Design"
                         value={boardName}
                         onChange={(e) => setBoardName(e.target.value)}
@@ -81,7 +81,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
                     {newColumns.map((column, index) => (
                         <div key={index} className=" flex items-center w-full ">
                             <input
-                                className=" bg-transparent flex-grow px-4 py-2 rounded-md text-sm  border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-[1px]  "
+                                className=" bg-transparent flex-grow px-4 py-2 rounded-md text-sm  border-[0.5px] border-gray-600 focus:border-[#03C988] outline-none  "
                                 onChange={(e) => {
                                     onChangeColumn(index, e.target.value);
                                 }}
@@ -98,7 +98,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
                     ))}
 
                     <div>
-                        <button className=" w-full items-center hover:opacity-70 dark:text-[#635fc7] dark:bg-white  text-white bg-[#635fc7] py-2 rounded-full "
+                        <button className=" w-full items-center hover:opacity-70 dark:text-[#03C988] dark:bg-white  text-white bg-[#03C988] py-2 rounded-full "
                             onClick={() => {
                                 setNewColumns((state) => [
                                     ...state,
@@ -106,7 +106,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
                                 ]);
                             }}
                         > + Add New Column </button>
-                        <button className=" w-full items-center hover:opacity-70 dark:text-white dark:bg-[#635fc7] mt-8 relative  text-white bg-[#635fc7] py-2 rounded-full"
+                        <button className=" w-full items-center hover:opacity-70 dark:text-white dark:bg-[#03C988] mt-8 relative  text-white bg-[#03C988] py-2 rounded-full"
                             onClick={() => {
                                 const isValid = validate();
                                 // if (isValid) onSubmit(type);

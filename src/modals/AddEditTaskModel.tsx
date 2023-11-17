@@ -78,23 +78,22 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
 
                 <div className="mt-8 flex flex-col space-y-1">
                     <label className="text-sm dark:text-white text-gray-500"> Task Name </label>
-                    <input
+                    <input className="bg-transparent px-4 py-2 rounded-md text-sm border-[0.5px] border-gray-600 focus:border-[#03C988] outline-none"
                         value={task.title}
                         onChange={updateTask}
                         name="title"
                         type="text"
-                        className="bg-transparent px-4 py-2 focus:border-0 rounded-md text-sm border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-none"
                         placeholder="e.g Take coffee break"
+                        autoComplete="off"
                     />
                 </div>
 
                 <div className="mt-8 flex flex-col space-y-1">
                     <label className="  text-sm dark:text-white text-gray-500"> Description </label>
-                    <textarea
+                    <textarea className="bg-transparent min-h-[200px] px-4 py-2 rounded-md text-sm border-[0.5px] border-gray-600 focus:border-[#03C988] outline-none "
                         value={task.description}
                         onChange={updateTask}
                         name="description"
-                        className="bg-transparent outline-none min-h-[200px] focus:border-0 px-4 py-2 rounded-md text-sm border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-[1px] "
                         placeholder="e.g. It's always good to take a break. This 
                             15 minute break will  recharge the batteries 
                             a little."
@@ -106,13 +105,12 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
 
                     {task.subtasks.map((subtask, subTaskIndex) => (
                         <div key={subTaskIndex} className=" flex items-center w-full ">
-                            <input
+                            <input className=" bg-transparent flex-grow px-4 py-2 rounded-md text-sm border-[0.5px] border-gray-600 focus:border-[#03C988] outline-none"
                                 onChange={(e) => {
                                     onChangeSubtask(subTaskIndex, e.target.value);
                                 }}
                                 type="text"
                                 value={subtask.title}
-                                className=" bg-transparent outline-none focus:border-0 flex-grow px-4 py-2 rounded-md text-sm  border-[0.5px] border-gray-600 focus:outline-[#635fc7] outline-[1px]  "
                                 placeholder=" e.g Take coffee break"
                             />
                             <i className="fa-solid fa-xmark fa-lg m-4 cursor-pointer"
@@ -123,7 +121,7 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
                         </div>
                     ))}
 
-                    <button className="w-full items-center dark:text-[#635fc7] dark:bg-white text-white bg-[#635fc7] py-2 rounded-full"
+                    <button className="w-full items-center hover:opacity-70 dark:text-[#03C988] dark:bg-white text-white bg-[#03C988] py-2 rounded-full"
                         onClick={() => {
                             setTask(preTask => {
                                 return {
@@ -136,18 +134,17 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
                 </div>
 
                 <div className="mt-8 flex flex-col space-y-3">
-                    <label className="  text-sm dark:text-white text-gray-500"> Current Status </label>
-                    <select
+                    <label className="text-sm dark:text-white text-gray-500"> Current Status </label>
+                    <select className="select-status flex-grow px-4 py-2 rounded-md text-sm bg-transparent border-[1px] border-gray-300 focus:border-[#03C988] outline-none"
                         value={task.status}
                         onChange={updateTask}
                         name="status"
-                        className="select-status flex-grow px-4 py-2 rounded-md text-sm bg-transparent focus:border-0  border-[1px] border-gray-300 focus:outline-[#635fc7] outline-none"
                     >
                         {data.columns.map((column, index) => (
                             <option key={index} className="dark:text-black">{column.name}</option>
                         ))}
                     </select>
-                    <button className=" w-full items-center text-white bg-[#635fc7] py-2 rounded-full "
+                    <button className=" w-full items-center hover:opacity-70 text-white bg-[#03C988] py-2 rounded-full "
                         onClick={() => {
                             const isValid = validate();
                             if (isValid) {
