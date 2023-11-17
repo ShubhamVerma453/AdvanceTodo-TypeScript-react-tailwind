@@ -19,9 +19,11 @@ interface Task {
 interface TaskModalProps {
     task: Task,
     setIsTaskModelOpen: (arg0: boolean) => void,
+    colIndex: number,
+    taskIndex: number,
 }
 
-const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen }) => {
+const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen, colIndex, taskIndex }) => {
     const activeIndex = useSelector(selectIndex);
     const data = useSelector(selectData)[activeIndex];
     const columns = data.columns;
@@ -38,7 +40,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen }) => {
                 <div className=" relative flex justify-between w-full items-center">
                     <h1 className=" text-lg">{task.title}</h1>
                     <i className="fa-solid fa-ellipsis-vertical fa-lg cursor-pointer" onClick={() => { setIsCongigureOpen(preState => !preState) }}></i>
-                    {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} setEditModelOpen={setIsAddEditTaskModelOpen}/>}
+                    {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} setEditModelOpen={setIsAddEditTaskModelOpen} />}
                 </div>
 
                 <p className=" text-gray-500 font-[600] tracking-wide text-xs pt-6 whitespace-normal"> {task.description} </p>
@@ -78,7 +80,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ task, setIsTaskModelOpen }) => {
             }
 
             {isAddEditTaskModelOpen &&
-                <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} />
+                <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} type="Edit" colIndex={colIndex} taskIndex={taskIndex} />
             }
         </div>
     )

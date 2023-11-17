@@ -13,9 +13,11 @@ interface Task {
 }
 interface TaskProps {
     task: Task
+    colIndex: number
+    taskIndex: number
 }
 
-const Task: React.FC<TaskProps> = ({ task }) => {
+const TaskBox: React.FC<TaskProps> = ({ task, colIndex, taskIndex }) => {
     const [isTaskModelOpen, setIsTaskModelOpen] = useState(false);
     return (
         <div >
@@ -26,9 +28,11 @@ const Task: React.FC<TaskProps> = ({ task }) => {
             {isTaskModelOpen && <TaskModal
                 task={task}
                 setIsTaskModelOpen={setIsTaskModelOpen}
+                colIndex={colIndex}
+                taskIndex={taskIndex}
             />}
         </div>
     )
 }
 
-export default Task;
+export default TaskBox;
