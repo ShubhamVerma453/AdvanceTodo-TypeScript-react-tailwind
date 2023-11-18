@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectData, selectIndex } from "../store/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask, selectData, selectIndex } from "../store/dataSlice";
 
 interface AddEditTaskModelProps {
     setIsAddEditTaskModelOpen: (arg0: boolean) => void,
@@ -14,6 +14,7 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
     const data = useSelector(selectData)[activeIndex];
     const [task, setTask] = useState(getCurrTask());
     const [showError, setShowError] = useState(false);
+    const dispatch = useDispatch();
 
     function getCurrTask() {
         if (colIndex === -1) {
@@ -21,7 +22,7 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
                 title: "",
                 description: "",
                 subtasks: [{ title: "", isCompleted: false }],
-                status: data.columns[0].name,
+                status: 0
             }
         } else {
             return data.columns[colIndex].tasks[taskIndex];
@@ -64,6 +65,12 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
         const hasMissingTitles = subtaskTitles.includes('');
 
         return !(hasDuplicates || hasMissingTitles);
+    }
+
+    function onSubmit(type: string) {
+        if (type === "Add") console.log("add");
+        
+        dispatch(addTask(task));
     }
 
 
@@ -140,15 +147,15 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
                         onChange={updateTask}
                         name="status"
                     >
-                        {data.columns.map((column, index) => (
-                            <option key={index} className="dark:text-black">{column.name}</option>
+                        {data.columns.map((column, colIndex) => (
+                            <option key={colIndex} className="dark:text-black" value={colIndex}>{column.name}</option>
                         ))}
                     </select>
                     <button className=" w-full items-center hover:opacity-70 text-white bg-[#03C988] py-2 rounded-full "
                         onClick={() => {
                             const isValid = validate();
                             if (isValid) {
-                                // onSubmit(type);
+                                onSubmit(type);
                                 setIsAddEditTaskModelOpen(false);
                             } else setShowError(true);
                         }}

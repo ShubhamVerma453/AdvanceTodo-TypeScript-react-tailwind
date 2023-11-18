@@ -8,7 +8,7 @@ interface Subtask {
 interface Task {
     title: string;
     description: string;
-    status: string;
+    status: number;
     subtasks: Subtask[];
 }
 interface Column {
@@ -23,21 +23,21 @@ interface MyData {
 type dataFormat = MyData[] | [];
 
 const getInitialStateFromLocal = (): dataFormat => {
-    let localData = localStorage.getItem("todoPlusData");
-    if (localData) {
-        try {
-            return JSON.parse(localData);
-        } catch (error) {
-            console.error("Error parsing local data:", error);
-        }
-    }
+    // let localData = localStorage.getItem("todoPlusData");
+    // if (localData) {
+    //     try {
+    //         return JSON.parse(localData);
+    //     } catch (error) {
+    //         console.error("Error parsing local data:", error);
+    //     }
+    // }
     // return [];
     return demoData.boards;
 }
 
-const getDemoData = (): dataFormat => {
-    return demoData.boards;
-}
+// const getDemoData = (): dataFormat => {
+//     return demoData.boards;
+// }
 
 const initialState = {
     data: getInitialStateFromLocal(),
@@ -52,10 +52,17 @@ export const dataSlice = createSlice({
             state.activeIndex = action.payload;
         },
 
+        addTask(state, action){
+            const { title, status, description, subtasks} = action.payload;
+            const task = { title, description, subtasks, status };
+            const column = state.data[state.activeIndex].columns[status];
+            column.tasks.push(task);
+        }
+
     }
 })
 
 export const selectData = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.data;
 export const selectIndex = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.activeIndex;
-export const { setActiveIndex } = dataSlice.actions;
+export const { setActiveIndex, addTask } = dataSlice.actions;
 export default dataSlice.reducer;
