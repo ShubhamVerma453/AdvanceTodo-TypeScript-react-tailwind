@@ -17,7 +17,6 @@ interface Column {
 }
 interface MyData {
     name: string;
-    isActive: boolean;
     columns: Column[];
 }
 type dataFormat = MyData[] | [];
@@ -52,17 +51,26 @@ export const dataSlice = createSlice({
             state.activeIndex = action.payload;
         },
 
-        addTask(state, action){
-            const { title, status, description, subtasks} = action.payload;
+        addBoard(state, action) {
+            const board: MyData = {
+                name: action.payload.boardName,
+                columns: action.payload.newColumns,
+            };
+            state.data = [...state.data, board];
+            state.activeIndex = state.data.length-1;
+        },
+
+        addTask(state, action) {
+            const { title, status, description, subtasks } = action.payload;
             const task = { title, description, subtasks, status };
             const column = state.data[state.activeIndex].columns[status];
             column.tasks.push(task);
-        }
+        },
 
     }
 })
 
 export const selectData = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.data;
 export const selectIndex = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.activeIndex;
-export const { setActiveIndex, addTask } = dataSlice.actions;
+export const { setActiveIndex, addBoard, addTask } = dataSlice.actions;
 export default dataSlice.reducer;

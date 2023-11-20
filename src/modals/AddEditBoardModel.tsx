@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectData, selectIndex } from "../store/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addBoard, selectData, selectIndex } from "../store/dataSlice";
 
 interface AddEditBoardModelProps {
     type: "Add" | "Edit",
@@ -13,6 +13,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
     const [boardName, setBoardName] = useState(getBoardName());
     const [newColumns, setNewColumns] = useState(getColumns());
     const [showError, setShowError] = useState(false);
+    const dispatch = useDispatch();
 
     function getColumns() {
         if (type === "Add") return [{ name: "Todo", tasks: [] }, { name: "Doing", tasks: [] }];
@@ -43,6 +44,14 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
         const hasMissingNames = columnNames.includes('');
 
         return !(hasDuplicates || hasMissingNames);
+    }
+
+    function onSubmit(type: string) {
+        if (type === "Add") {
+            dispatch(addBoard({boardName, newColumns}))
+        } else{
+            console.log("Edit");
+        }
     }
 
     useEffect(() => {
@@ -109,8 +118,11 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
                         <button className=" w-full items-center hover:opacity-70 dark:text-white dark:bg-[#03C988] mt-8 relative  text-white bg-[#03C988] py-2 rounded-full"
                             onClick={() => {
                                 const isValid = validate();
-                                // if (isValid) onSubmit(type);
-                                if (!isValid) setShowError(true);
+                                if (isValid) {
+                                    onSubmit(type);
+                                    setIsAddEditBoardModelOpen(false);
+                                }
+                                else setShowError(true);
                             }}
                         > Create New Board </button>
                     </div>
