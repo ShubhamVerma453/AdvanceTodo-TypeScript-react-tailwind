@@ -57,7 +57,7 @@ export const dataSlice = createSlice({
                 columns: action.payload.newColumns,
             };
             state.data = [...state.data, board];
-            state.activeIndex = state.data.length-1;
+            state.activeIndex = state.data.length - 1;
         },
 
         addTask(state, action) {
@@ -67,10 +67,19 @@ export const dataSlice = createSlice({
             column.tasks.push(task);
         },
 
+        editBoard(state, action) {
+            const updatedData = [...state.data];
+            updatedData[state.activeIndex] = {
+                name: action.payload.boardName,
+                columns: action.payload.newColumns,
+            };
+            state.data = updatedData;
+        },
+
     }
 })
 
 export const selectData = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.data;
 export const selectIndex = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.activeIndex;
-export const { setActiveIndex, addBoard, addTask } = dataSlice.actions;
+export const { setActiveIndex, addBoard, addTask, editBoard } = dataSlice.actions;
 export default dataSlice.reducer;

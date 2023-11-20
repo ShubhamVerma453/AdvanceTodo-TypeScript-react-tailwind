@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addBoard, selectData, selectIndex } from "../store/dataSlice";
+import { addBoard, editBoard, selectData, selectIndex } from "../store/dataSlice";
 
 interface AddEditBoardModelProps {
     type: "Add" | "Edit",
@@ -19,7 +19,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
         if (type === "Add") return [{ name: "Todo", tasks: [] }, { name: "Doing", tasks: [] }];
         return data.columns;
     }
-    
+
     function getBoardName() {
         if (type === "Add") return "";
         return data.name;
@@ -48,9 +48,9 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
 
     function onSubmit(type: string) {
         if (type === "Add") {
-            dispatch(addBoard({boardName, newColumns}))
-        } else{
-            console.log("Edit");
+            dispatch(addBoard({ boardName, newColumns }));
+        } else {
+            dispatch(editBoard({ boardName, newColumns }));
         }
     }
 
@@ -124,7 +124,7 @@ const AddEditBoardModel: React.FC<AddEditBoardModelProps> = ({ setIsAddEditBoard
                                 }
                                 else setShowError(true);
                             }}
-                        > Create New Board </button>
+                        > {type === "Add" ? "Create New" : "Edit"} Board </button>
                     </div>
                 </div>
                 <p className={`text-center text-xs pt-2 text-red-500 ${!showError && "opacity-0"}`}>Empty or Duplicate fields</p>
