@@ -3,7 +3,7 @@ import ConfigureMenu from "../components/ConfigureMenu";
 import DeleteModal from "./DeleteModel";
 import SubtaskBox from "../components/Subtask";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTask, selectData, selectIndex } from "../store/dataSlice";
+import { changeSubtaskState, deleteTask, selectData, selectIndex } from "../store/dataSlice";
 import AddEditTaskModel from "./AddEditTaskModel";
 
 interface TaskModalProps {
@@ -23,9 +23,13 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
 
     function onChange() { }
 
-    function onDeleteTask(){
+    function onDeleteTask() {
         setIsTaskModelOpen(false);
-        dispatch(deleteTask({taskIndex, colIndex}));
+        dispatch(deleteTask({ taskIndex, colIndex }));
+    }
+
+    function onChangeSubtask(subtaskIndex: number) {
+        dispatch(changeSubtaskState({ colIndex, taskIndex, subtaskIndex }));
     }
 
     return (
@@ -49,7 +53,12 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
                 <div className=" mt-3 space-y-2">
                     {task.subtasks.map((subtask, index) => {
                         return (
-                            <SubtaskBox key={index} title={subtask.title} isCompleted={subtask.isCompleted} />
+                            <SubtaskBox
+                                key={index}
+                                onChangeSubtask = {() => onChangeSubtask(index)}
+                                title={subtask.title}
+                                isCompleted={subtask.isCompleted}
+                            />
                         );
                     })}
                 </div>
@@ -75,7 +84,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
             }
 
             {isAddEditTaskModelOpen &&
-                <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} type="Edit" colIndex={colIndex} taskIndex={taskIndex} />
+                <AddEditTaskModel setIsAddEditTaskModelOpen={setIsAddEditTaskModelOpen} setIsTaskModelOpen={setIsTaskModelOpen} type="Edit" colIndex={colIndex} taskIndex={taskIndex} />
             }
         </div>
     )

@@ -4,17 +4,19 @@ import { addTask, editTask, selectData, selectIndex } from "../store/dataSlice";
 
 interface AddEditTaskModelProps {
     setIsAddEditTaskModelOpen: (arg0: boolean) => void,
+    setIsTaskModelOpen?: (arg0: boolean) => void,
     type: "Add" | "Edit",
     colIndex?: number,
     taskIndex?: number,
 }
 
-const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskModelOpen, type, colIndex = -1, taskIndex = -1 }) => {
+const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskModelOpen, setIsTaskModelOpen, type, colIndex = -1, taskIndex = -1 }) => {
     const activeIndex = useSelector(selectIndex);
     const data = useSelector(selectData)[activeIndex];
     const [task, setTask] = useState(getCurrTask());
     const [showError, setShowError] = useState(false);
     const dispatch = useDispatch();
+    const setIsTaskModelOpenHandler = setIsTaskModelOpen ?? (() => { });
 
     function getCurrTask() {
         if (colIndex === -1) {
@@ -69,7 +71,10 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
 
     function onSubmit(type: string) {
         if (type === "Add") dispatch(addTask(task));
-        else dispatch(editTask({ ...task, taskIndex, colIndex }));
+        else {
+            dispatch(editTask({ ...task, taskIndex, colIndex }));
+            setIsTaskModelOpenHandler(false);
+        }
     }
 
 
