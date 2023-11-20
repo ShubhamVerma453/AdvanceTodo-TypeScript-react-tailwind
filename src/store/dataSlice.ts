@@ -92,9 +92,13 @@ export const dataSlice = createSlice({
 
         deleteBoard(state, action) {
             state.activeIndex = 0;
-            console.log(action.payload);
-            
             state.data = [...state.data.slice(0, action.payload), ...state.data.slice(action.payload + 1)];
+        },
+
+        deleteTask(state, action) {
+            const { taskIndex, colIndex } = action.payload;
+            const column = state.data[state.activeIndex].columns[colIndex];
+            column.tasks = [...column.tasks.slice(0, taskIndex), ...column.tasks.slice(taskIndex + 1)]
         }
 
     }
@@ -102,5 +106,5 @@ export const dataSlice = createSlice({
 
 export const selectData = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.data;
 export const selectIndex = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.activeIndex;
-export const { setActiveIndex, addBoard, addTask, editBoard, editTask, deleteBoard } = dataSlice.actions;
+export const { setActiveIndex, addBoard, addTask, editBoard, editTask, deleteBoard, deleteTask } = dataSlice.actions;
 export default dataSlice.reducer;

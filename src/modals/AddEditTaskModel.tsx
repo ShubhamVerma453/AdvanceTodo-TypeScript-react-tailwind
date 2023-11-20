@@ -147,7 +147,7 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
                         name="status"
                     >
                         {data.columns.map((column, colIndex) => (
-                            <option key={colIndex} selected={colIndex === task.status} className="dark:text-black" value={colIndex}>{column.name}</option>
+                            <option key={colIndex} defaultValue={colIndex === task.status ? "selected" : undefined} className="dark:text-black" value={colIndex}>{column.name}</option>
                         ))}
                     </select>
                     <button className=" w-full items-center hover:opacity-70 text-white bg-[#03C988] py-2 rounded-full "

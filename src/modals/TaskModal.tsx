@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import ConfigureMenu from "../components/ConfigureMenu";
 import DeleteModal from "./DeleteModel";
 import SubtaskBox from "../components/Subtask";
-import { useSelector } from "react-redux";
-import { selectData, selectIndex } from "../store/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteTask, selectData, selectIndex } from "../store/dataSlice";
 import AddEditTaskModel from "./AddEditTaskModel";
 
 interface TaskModalProps {
@@ -19,13 +19,13 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
     const [isCongigureOpen, setIsCongigureOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
+    const dispatch = useDispatch();
 
     function onChange() { }
 
     function onDeleteTask(){
-        console.log("ok");
-        
-        // dispatch(deleteBoard(activeIndex));
+        setIsTaskModelOpen(false);
+        dispatch(deleteTask({taskIndex, colIndex}));
     }
 
     return (
@@ -64,7 +64,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
                         name="status"
                     >
                         {data.columns.map((col, index) => (
-                            <option key={index} selected={index === task.status} className="dark:text-black" value={index}>{col.name}</option>
+                            <option key={index} defaultValue={colIndex === task.status ? "selected" : undefined} className="dark:text-black" value={index}>{col.name}</option>
                         ))}
                     </select>
                 </div>
