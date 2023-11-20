@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, selectData, selectIndex } from "../store/dataSlice";
+import { addTask, editTask, selectData, selectIndex } from "../store/dataSlice";
 
 interface AddEditTaskModelProps {
     setIsAddEditTaskModelOpen: (arg0: boolean) => void,
@@ -68,9 +68,8 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
     }
 
     function onSubmit(type: string) {
-        if (type === "Add") console.log("add");
-        
-        dispatch(addTask(task));
+        if (type === "Add") dispatch(addTask(task));
+        else dispatch(editTask({ ...task, taskIndex, colIndex }));
     }
 
 

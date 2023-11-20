@@ -76,10 +76,24 @@ export const dataSlice = createSlice({
             state.data = updatedData;
         },
 
+        editTask(state, action) {
+            const { title, status, description, subtasks, taskIndex, colIndex } = action.payload;
+            const task = { title, description, subtasks, status };
+            const column = state.data[state.activeIndex].columns[colIndex];
+            if (colIndex !== task.status) {
+                column.tasks = [...column.tasks.slice(0, taskIndex), ...column.tasks.slice(taskIndex + 1)];
+                const updatedColumn = state.data[state.activeIndex].columns[status];
+                updatedColumn.tasks = [task, ...updatedColumn.tasks];
+            } else {
+                column.tasks = [...column.tasks.slice(0, taskIndex), task, ...column.tasks.slice(taskIndex + 1)]
+            }
+
+        }
+
     }
 })
 
 export const selectData = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.data;
 export const selectIndex = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.activeIndex;
-export const { setActiveIndex, addBoard, addTask, editBoard } = dataSlice.actions;
+export const { setActiveIndex, addBoard, addTask, editBoard, editTask } = dataSlice.actions;
 export default dataSlice.reducer;
