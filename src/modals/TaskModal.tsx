@@ -22,6 +22,12 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
 
     function onChange() { }
 
+    function onDeleteTask(){
+        console.log("ok");
+        
+        // dispatch(deleteBoard(activeIndex));
+    }
+
     return (
         <div onClick={(e) => {
             if (e.target !== e.currentTarget) return;
@@ -65,7 +71,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
             </div>
 
             {isDeleteModalOpen &&
-                <DeleteModal type="Task" title={task.title} setIsDeleteModalOpen={setIsDeleteModalOpen} />
+                <DeleteModal type="Task" title={task.title} onDeleteBtnClick={onDeleteTask} setIsDeleteModalOpen={setIsDeleteModalOpen} />
             }
 
             {isAddEditTaskModelOpen &&

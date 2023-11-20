@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useSelector } from 'react-redux';
-import { selectData, selectIndex } from "../store/dataSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteBoard, selectData, selectIndex } from "../store/dataSlice";
 import ConfigureMenu from "./ConfigureMenu";
 import DeleteModal from "../modals/DeleteModel";
 import Task from "./Task";
@@ -19,6 +19,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
     const [isCongigureOpen, setIsCongigureOpen] = useState(false);
     const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
     const [isAddEditBoardModel, setIsAddEditBoardModel] = useState(false);
+    const dispatch = useDispatch();
     const colors = [
         "bg-red-500",
         "bg-yellow-500",
@@ -33,6 +34,10 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
 
     function toggleIsCongigureOpen() {
         setIsCongigureOpen(preState => !preState);
+    }
+
+    function onDeleteBoard(){
+        dispatch(deleteBoard(activeIndex));
     }
 
     return <>
@@ -81,7 +86,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
         </div>
 
         {isDeleteModalOpen &&
-            <DeleteModal type="Board" title={data.name} setIsDeleteModalOpen={setIsDeleteModalOpen} />
+            <DeleteModal type="Board" title={data.name} onDeleteBtnClick={onDeleteBoard} setIsDeleteModalOpen={setIsDeleteModalOpen} />
         }
 
         {isAddEditTaskModelOpen &&

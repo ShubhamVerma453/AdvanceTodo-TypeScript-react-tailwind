@@ -3,7 +3,7 @@ import React from "react";
 interface DeleteModelProps {
     type: string,
     title: string,
-    onDeleteBtnClick?: () => void,
+    onDeleteBtnClick: () => void,
     setIsDeleteModalOpen: (arg0: boolean) => void
 }
 
@@ -19,10 +19,12 @@ const DeleteModal: React.FC<DeleteModelProps> = ({ type, title, onDeleteBtnClick
                 <p className="text-gray-500 tracking-wide text-xs pt-3"> Are you sure you want to delete the "{title}" {type}. This action cannot be reversed.</p>
 
                 <div className=" flex w-full mt-4 items-center justify-center space-x-4 ">
-                    <button
-                        // onClick={onDeleteBtnClick}
-                        className="w-full items-center text-white hover:opacity-75 bg-red-500 py-2 rounded-full shadow-lg"
+                    <button onClick={() => {
+                        setIsDeleteModalOpen(false);
+                        onDeleteBtnClick();
+                    }} className="w-full items-center text-white hover:opacity-75 bg-red-500 py-2 rounded-full shadow-lg"
                     > Delete </button>
+
                     <button onClick={() => { setIsDeleteModalOpen(false) }}
                         className="w-full items-center text-[#03C988] hover:opacity-75 bg-[#635fc71a]  py-2 rounded-full shadow-lg"
                     > Cancel </button>
