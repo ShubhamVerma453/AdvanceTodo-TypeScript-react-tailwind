@@ -147,7 +147,7 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
                         name="status"
                     >
                         {data.columns.map((column, colIndex) => (
-                            <option key={colIndex} className="dark:text-black" value={colIndex}>{column.name}</option>
+                            <option key={colIndex} selected={colIndex === task.status} className="dark:text-black" value={colIndex}>{column.name}</option>
                         ))}
                     </select>
                     <button className=" w-full items-center hover:opacity-70 text-white bg-[#03C988] py-2 rounded-full "
@@ -158,7 +158,7 @@ const AddEditTaskModel: React.FC<AddEditTaskModelProps> = ({ setIsAddEditTaskMod
                                 setIsAddEditTaskModelOpen(false);
                             } else setShowError(true);
                         }}
-                    > Create task </button>
+                    > {type === "Add" ? "Create New" : "Edit"} task </button>
                 </div>
                 <p className={`text-center text-xs pt-2 text-red-500 ${!showError && "opacity-0"}`}>Empty or Duplicate fields</p>
             </div>

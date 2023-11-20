@@ -16,7 +16,6 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
     const activeIndex = useSelector(selectIndex);
     const data = useSelector(selectData)[activeIndex];
     const task = data.columns[colIndex].tasks[taskIndex];
-    const columns = data.columns;
     const [isCongigureOpen, setIsCongigureOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
@@ -53,15 +52,13 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
                     <label className="text-sm dark:text-white text-gray-500">
                         Current Status
                     </label>
-                    <select
-                        className=" flex-grow px-4 py-2 rounded-md text-sm bg-transparent focus:border-0  border-[1px] border-gray-300 focus:outline-[#03C988] outline-none"
+                    <select className="select-status flex-grow px-4 py-2 rounded-md text-sm bg-transparent border-[1px] border-gray-300 focus:border-[#03C988] outline-none"
                         value={task.status}
                         onChange={onChange}
+                        name="status"
                     >
-                        {columns.map((col, index) => (
-                            <option className=" dark:text-black" key={index}>
-                                {col.name}
-                            </option>
+                        {data.columns.map((col, index) => (
+                            <option key={index} selected={index === task.status} className="dark:text-black" value={index}>{col.name}</option>
                         ))}
                     </select>
                 </div>
