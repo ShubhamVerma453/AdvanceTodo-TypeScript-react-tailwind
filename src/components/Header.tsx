@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useDarkMode from '../hooks/useDarkMode';
+import { useDispatch } from 'react-redux';
+import { populateDemoData } from '../store/dataSlice';
+import PopulateModel from '../modals/PopulateModel';
 
 interface HeaderProps {
     toggleMenu: () => void;
@@ -8,6 +11,12 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ toggleMenu, isOpen }) => {
     const [theme, toggleTheme] = useDarkMode();
+    const [isPopulateModelOpen, setPopulateModelOpen] = useState(false);
+    const dispatch = useDispatch();
+
+    function populateData() {
+        dispatch(populateDemoData());
+    }
 
     return (
         <div className="header bg-white dark:bg-[#2b2c37]">
@@ -18,15 +27,18 @@ const Header: React.FC<HeaderProps> = ({ toggleMenu, isOpen }) => {
                 </div>
                 <div className='flex text-center gap-5'>
                     <div className="cursor-pointer  text-3xl" onClick={toggleTheme}>
-                    {
-                        theme === "light" ?
-                            <i className="fa-regular fa-sun"></i> :
-                            <i className="fas fa-moon"></i>
-                    }
+                        {
+                            theme === "light" ?
+                                <i className="fa-regular fa-sun"></i> :
+                                <i className="fas fa-moon"></i>
+                        }
                     </div>
-                <button title='Populate demo data for testing' className='text-xs bg-slate-300 dark:bg-slate-700 px-3 rounded-xl hover:bg-[#03C988] dark:hover:bg-[#03C988]'>Populate data</button>
+                    <button onClick={() => { setPopulateModelOpen(true) }} title='Populate demo data for testing' className='text-xs bg-slate-300 dark:bg-slate-700 px-3 rounded-xl hover:bg-[#03C988] dark:hover:bg-[#03C988]'>Populate data</button>
                 </div>
             </header>
+
+            {isPopulateModelOpen && <PopulateModel onPopulateBtnClick={populateData} setPopulateModelOpen={setPopulateModelOpen} />}
+
         </div>
     );
 }

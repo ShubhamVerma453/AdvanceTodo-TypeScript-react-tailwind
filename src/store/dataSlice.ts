@@ -22,21 +22,19 @@ interface MyData {
 type dataFormat = MyData[] | [];
 
 const getInitialStateFromLocal = (): dataFormat => {
-    // let localData = localStorage.getItem("todoPlusData");
-    // if (localData) {
-    //     try {
-    //         return JSON.parse(localData);
-    //     } catch (error) {
-    //         console.error("Error parsing local data:", error);
-    //     }
-    // }
-    // return [];
-    return demoData.boards;
+    let localData = localStorage.getItem("todoPlusData");
+    if (localData) {
+        try {
+            return JSON.parse(localData);
+        } catch (error) {
+            console.error("Error parsing local data:", error);
+        }
+    } else {
+        localStorage.setItem("todoPlusData", JSON.stringify(demoData.boards))
+    }
+    return [];
+    // return demoData.boards;
 }
-
-// const getDemoData = (): dataFormat => {
-//     return demoData.boards;
-// }
 
 const initialState = {
     data: getInitialStateFromLocal(),
@@ -47,6 +45,10 @@ export const dataSlice = createSlice({
     name: "todoData",
     initialState,
     reducers: {
+        populateDemoData(state) {
+            state.data = demoData.boards;
+        },
+
         setActiveIndex(state, action) {
             state.activeIndex = action.payload;
         },
@@ -101,8 +103,8 @@ export const dataSlice = createSlice({
             column.tasks = [...column.tasks.slice(0, taskIndex), ...column.tasks.slice(taskIndex + 1)]
         },
 
-        changeSubtaskState(state, action){
-            const {colIndex, taskIndex, subtaskIndex} = action.payload;
+        changeSubtaskState(state, action) {
+            const { colIndex, taskIndex, subtaskIndex } = action.payload;
             const subtask = state.data[state.activeIndex].columns[colIndex].tasks[taskIndex].subtasks[subtaskIndex];
             subtask.isCompleted = !subtask.isCompleted;
         },
@@ -112,5 +114,5 @@ export const dataSlice = createSlice({
 
 export const selectData = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.data;
 export const selectIndex = (state: { data: { data: dataFormat, activeIndex: number } }) => state.data.activeIndex;
-export const { setActiveIndex, addBoard, addTask, editBoard, editTask, deleteBoard, deleteTask, changeSubtaskState } = dataSlice.actions;
+export const { populateDemoData, setActiveIndex, addBoard, addTask, editBoard, editTask, deleteBoard, deleteTask, changeSubtaskState } = dataSlice.actions;
 export default dataSlice.reducer;
