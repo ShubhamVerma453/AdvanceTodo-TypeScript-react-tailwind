@@ -21,8 +21,6 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
     const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
     const dispatch = useDispatch();
 
-    function onChange() { }
-
     function onDeleteTask() {
         setIsTaskModelOpen(false);
         dispatch(deleteTask({ taskIndex, colIndex }));
@@ -41,7 +39,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
                 <div className=" relative flex justify-between w-full items-center">
                     <h1 className=" text-lg">{task.title}</h1>
                     <i className="fa-solid fa-ellipsis-vertical fa-lg cursor-pointer" onClick={() => { setIsCongigureOpen(preState => !preState) }}></i>
-                    {isCongigureOpen && <ConfigureMenu type="Board" setIsDeleteModalOpen={setIsDeleteModalOpen} setEditModelOpen={setIsAddEditTaskModelOpen} />}
+                    {isCongigureOpen && <ConfigureMenu type="Task" setIsDeleteModalOpen={setIsDeleteModalOpen} setEditModelOpen={setIsAddEditTaskModelOpen} />}
                 </div>
 
                 <p className=" text-gray-500 font-[600] tracking-wide text-xs pt-6 whitespace-normal"> {task.description} </p>
@@ -55,7 +53,7 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
                         return (
                             <SubtaskBox
                                 key={index}
-                                onChangeSubtask = {() => onChangeSubtask(index)}
+                                onChangeSubtask={() => onChangeSubtask(index)}
                                 title={subtask.title}
                                 isCompleted={subtask.isCompleted}
                             />
@@ -67,15 +65,9 @@ const TaskModal: React.FC<TaskModalProps> = ({ setIsTaskModelOpen, colIndex, tas
                     <label className="text-sm dark:text-white text-gray-500">
                         Current Status
                     </label>
-                    <select className="select-status flex-grow px-4 py-2 rounded-md text-sm bg-transparent border-[1px] border-gray-300 focus:border-[#03C988] outline-none"
-                        value={task.status}
-                        onChange={onChange}
-                        name="status"
-                    >
-                        {data.columns.map((col, index) => (
-                            <option key={index} defaultValue={colIndex === task.status ? "selected" : undefined} className="dark:text-black" value={index}>{col.name}</option>
-                        ))}
-                    </select>
+                    <div className=" w-full flex hover:bg-[#635fc740] dark:hover:bg-[#635fc740] rounded-md relative items-center justify-start dark:bg-[#20212c]  p-3 gap-4  bg-[#f4f7fd]">
+                        {data.columns[task.status].name}
+                    </div>
                 </div>
             </div>
 
