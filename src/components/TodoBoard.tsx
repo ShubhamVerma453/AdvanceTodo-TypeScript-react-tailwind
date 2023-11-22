@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteBoard, selectData, selectIndex } from "../store/dataSlice";
 import ConfigureMenu from "./ConfigureMenu";
 import DeleteModal from "../modals/DeleteModel";
-import Task from "./Task";
 import AddEditBoardModel from "../modals/AddEditBoardModel";
 import AddEditTaskModel from "../modals/AddEditTaskModel";
+import Column from "./Column";
 
 interface SideBarProps {
     isOpen: boolean;
@@ -20,23 +20,12 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
     const [isAddEditTaskModelOpen, setIsAddEditTaskModelOpen] = useState(false);
     const [isAddEditBoardModel, setIsAddEditBoardModel] = useState(false);
     const dispatch = useDispatch();
-    const colors = [
-        "bg-red-500",
-        "bg-yellow-500",
-        "bg-blue-500",
-        "bg-purple-500",
-        "bg-green-500",
-        "bg-indigo-500",
-        "bg-orange-500",
-        "bg-pink-500",
-        "bg-sky-500",
-    ];
 
     function toggleIsCongigureOpen() {
         setIsCongigureOpen(preState => !preState);
     }
 
-    function onDeleteBoard(){
+    function onDeleteBoard() {
         dispatch(deleteBoard(activeIndex));
     }
 
@@ -59,21 +48,7 @@ const TodoBoard: React.FC<SideBarProps> = ({ isOpen }) => {
 
                     {data.columns && data.columns.map((column, colIndex) => {
                         return (
-
-                            <div className="my-4 p-4 mr-5 w-80  inline-block align-top" key={colIndex}>
-                                <div className="flex items-center gap-3 mb-7">
-                                    <span className={`${colors[colIndex % (colors.length)]} inline-block w-5 h-5 rounded-full`}></span>
-                                    {column.name} ({column.tasks.length})
-                                </div>
-
-                                <div className="">
-                                    {column.tasks.map((task, taskIndex) => {
-                                        return (
-                                            <Task key={taskIndex} colIndex={colIndex} taskIndex={taskIndex} />
-                                        )
-                                    })}
-                                </div>
-                            </div>
+                            <Column key={colIndex} colIndex={colIndex} />
                         )
                     })
                     }
