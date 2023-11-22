@@ -30,10 +30,13 @@ const getInitialStateFromLocal = (): dataFormat => {
             console.error("Error parsing local data:", error);
         }
     } else {
-        localStorage.setItem("todoPlusData", JSON.stringify(demoData.boards))
+        return [];
     }
     return [];
-    // return demoData.boards;
+}
+
+const saveDataToLocalStorage = (data : MyData[] | []) => {
+    localStorage.setItem("todoPlusData", JSON.stringify(data))
 }
 
 const initialState = {
@@ -47,6 +50,7 @@ export const dataSlice = createSlice({
     reducers: {
         populateDemoData(state) {
             state.data = demoData.boards;
+            localStorage.setItem("todoPlusData", JSON.stringify(demoData.boards))
         },
 
         setActiveIndex(state, action) {
@@ -60,6 +64,7 @@ export const dataSlice = createSlice({
             };
             state.data = [...state.data, board];
             state.activeIndex = state.data.length - 1;
+            saveDataToLocalStorage(state.data)
         },
 
         addTask(state, action) {
@@ -67,6 +72,7 @@ export const dataSlice = createSlice({
             const task = { title, description, subtasks, status };
             const column = state.data[state.activeIndex].columns[status];
             column.tasks.push(task);
+            saveDataToLocalStorage(state.data)
         },
 
         editBoard(state, action) {
@@ -76,6 +82,7 @@ export const dataSlice = createSlice({
                 columns: action.payload.newColumns,
             };
             state.data = updatedData;
+            saveDataToLocalStorage(state.data)
         },
 
         editTask(state, action) {
@@ -89,24 +96,27 @@ export const dataSlice = createSlice({
             } else {
                 column.tasks = [...column.tasks.slice(0, taskIndex), task, ...column.tasks.slice(taskIndex + 1)]
             }
-
+            saveDataToLocalStorage(state.data)
         },
 
         deleteBoard(state, action) {
             state.activeIndex = 0;
             state.data = [...state.data.slice(0, action.payload), ...state.data.slice(action.payload + 1)];
+            saveDataToLocalStorage(state.data)
         },
 
         deleteTask(state, action) {
             const { taskIndex, colIndex } = action.payload;
             const column = state.data[state.activeIndex].columns[colIndex];
-            column.tasks = [...column.tasks.slice(0, taskIndex), ...column.tasks.slice(taskIndex + 1)]
+            column.tasks = [...column.tasks.slice(0, taskIndex), ...column.tasks.slice(taskIndex + 1)];
+            saveDataToLocalStorage(state.data)
         },
 
         changeSubtaskState(state, action) {
             const { colIndex, taskIndex, subtaskIndex } = action.payload;
             const subtask = state.data[state.activeIndex].columns[colIndex].tasks[taskIndex].subtasks[subtaskIndex];
             subtask.isCompleted = !subtask.isCompleted;
+            saveDataToLocalStorage(state.data)
         },
 
         dragTask(state, action) {
@@ -117,6 +127,7 @@ export const dataSlice = createSlice({
             task.status = colIndex;
             preCol.tasks = [...preCol.tasks.slice(0, taskIndex), ...preCol.tasks.slice(taskIndex + 1)];
             column.tasks = [task, ...column.tasks];
+            saveDataToLocalStorage(state.data)
         },
     }
 })
