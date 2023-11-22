@@ -121,6 +121,7 @@ export const dataSlice = createSlice({
 
         dragTask(state, action) {
             const {prevColIndex, taskIndex, colIndex} = action.payload;
+            if(prevColIndex === colIndex) return;
             const column = state.data[state.activeIndex].columns[colIndex];
             const preCol = state.data[state.activeIndex].columns[prevColIndex];
             const task = state.data[state.activeIndex].columns[prevColIndex].tasks[taskIndex];
