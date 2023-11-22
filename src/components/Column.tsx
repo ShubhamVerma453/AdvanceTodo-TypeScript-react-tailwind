@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TaskBox from "./Task";
-import { useSelector } from "react-redux";
-import { selectData, selectIndex } from "../store/dataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { dragTask, selectData, selectIndex } from "../store/dataSlice";
 
 interface ColumnProps {
     colIndex: number
@@ -12,6 +12,7 @@ const Column: React.FC<ColumnProps> = ({ colIndex }) => {
     const data = useSelector(selectData)[activeIndex];
     const column = data.columns[colIndex];
     const [isDraggingOver, setIsDraggingOver] = useState(false);
+    const dispatch = useDispatch();
     const colors = [
         "bg-red-500",
         "bg-yellow-500",
@@ -28,7 +29,8 @@ const Column: React.FC<ColumnProps> = ({ colIndex }) => {
         const { prevColIndex, taskIndex } = JSON.parse(
             e.dataTransfer.getData("text")
         );
-        console.log(prevColIndex, taskIndex);
+
+        dispatch(dragTask({prevColIndex, taskIndex, colIndex}));
         setIsDraggingOver(false);
     }
 
